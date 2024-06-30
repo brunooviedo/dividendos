@@ -44,20 +44,6 @@ if ticker:
     fig_hist = px.histogram(dividend_data, x='Dividendo', nbins=20, title='Histograma de Dividendos')
     st.plotly_chart(fig_hist, use_container_width=True)
 
-    # Filtrar por fecha
-    start_date = st.date_input('Seleccionar Fecha de Inicio', dividend_data['Fecha'].min().date())
-    end_date = st.date_input('Seleccionar Fecha de Fin', dividend_data['Fecha'].max().date())
-
-    # Convertir start_date y end_date a datetime
-    start_date = pd.to_datetime(start_date)
-    end_date = pd.to_datetime(end_date)
-
-    filtered_data = dividend_data[(dividend_data['Fecha'] >= start_date) & (dividend_data['Fecha'] <= end_date)]
-
-    # Mostrar datos filtrados
-    st.subheader('Datos Filtrados por Fecha')
-    st.write(filtered_data)
-
     # Resumen por año
     dividend_data['Año'] = pd.to_datetime(dividend_data['Fecha']).dt.year
     yearly_summary = dividend_data.groupby('Año')['Dividendo'].sum()
