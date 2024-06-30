@@ -43,6 +43,10 @@ if ticker:
     st.subheader('Datos de Dividendos')
     st.write(dividend_data)
 
+    # Filtrar datos hasta la fecha actual (2024)
+    max_date = pd.Timestamp.now().date()
+    dividend_data = dividend_data[dividend_data['Fecha'] <= max_date]
+
     # Calcular estadísticas descriptivas
     st.subheader('Análisis Descriptivo')
     st.write(dividend_data.describe())
