@@ -48,7 +48,11 @@ if ticker:
     start_date = st.date_input('Seleccionar Fecha de Inicio', dividend_data['Fecha'].min().date())
     end_date = st.date_input('Seleccionar Fecha de Fin', dividend_data['Fecha'].max().date())
 
-    filtered_data = dividend_data[(dividend_data['Fecha'] >= pd.to_datetime(start_date)) & (dividend_data['Fecha'] <= pd.to_datetime(end_date))]
+    # Convertir start_date y end_date a datetime
+    start_date = pd.to_datetime(start_date)
+    end_date = pd.to_datetime(end_date)
+
+    filtered_data = dividend_data[(dividend_data['Fecha'] >= start_date) & (dividend_data['Fecha'] <= end_date)]
 
     # Mostrar datos filtrados
     st.subheader('Datos Filtrados por Fecha')
