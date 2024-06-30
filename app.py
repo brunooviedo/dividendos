@@ -13,14 +13,30 @@ def load_dividend_data(ticker):
     dividends['Fecha'] = pd.to_datetime(dividends['Fecha'])
     return dividends
 
+# Función para obtener información del stock
+@st.cache
+def get_stock_info(ticker):
+    stock = yf.Ticker(ticker)
+    info = stock.info
+    return info
+
 # Título de la aplicación
 st.title('Análisis de Dividendos Pagados')
 
 # Campo para ingresar el símbolo de la acción
 ticker = st.text_input('Ingrese el símbolo de la acción', 'AAPL')
 
-# Cargar los datos de dividendos
 if ticker:
+    # Obtener información de la acción
+    stock_info = get_stock_info(ticker)
+    company_name = stock_info.get('longName', 'Nombre no disponible')
+    current_price = stock_info.get('currentPrice', 'Precio no disponible')
+
+    # Mostrar el nombre de la compañía y el precio actual de la acción
+    st.subheader(f'{company_name} ({ticker})')
+    st.write(f'Precio Actual: ${current_price}')
+
+    # Cargar los datos de dividendos
     dividend_data = load_dividend_data(ticker)
 
     # Mostrar una vista previa de los datos
