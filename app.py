@@ -58,8 +58,12 @@ if ticker:
         st.write(f'${total_dividends:.2f}')
 
         # Obtener el último dividendo pagado y su fecha
-        last_dividend = dividend_data.iloc[-1]['Dividendo']
-        last_dividend_date = dividend_data.iloc[-1]['Fecha'].strftime('%Y-%m-%d')
+        if not dividend_data.empty:
+            last_dividend = dividend_data.iloc[-1]['Dividendo']
+            last_dividend_date = dividend_data.iloc[-1]['Fecha'].strftime('%Y-%m-%d')
+        else:
+            last_dividend = 0
+            last_dividend_date = 'No disponible'
 
         # Mostrar el último dividendo pagado y su fecha
         st.subheader('Último Dividendo Pagado')
