@@ -73,12 +73,15 @@ if ticker:
     num_shares = st.sidebar.number_input('Número de acciones que tienes', min_value=1, value=100)
     avg_value = st.sidebar.number_input('Valor promedio de cada acción (en $)', min_value=0.0, value=150.0, step=0.01)
 
-    # Calcular dividendos recibidos
-    total_dividends_received = total_dividends * num_shares
+    # Obtener el último dividendo pagado
+    last_dividend = dividend_data['Dividendo'].iloc[-1] if not dividend_data.empty else 0
+
+    # Calcular dividendos recibidos con el último dividendo pagado
+    total_dividends_received = last_dividend * num_shares
 
     # Mostrar el cálculo de dividendos recibidos
     st.sidebar.subheader('Dividendos Recibidos')
-    st.sidebar.write(f'Total de dividendos recibidos: ${total_dividends_received:.2f}')
+    st.sidebar.write(f'Total de dividendos recibidos (último dividendo): ${total_dividends_received:.2f}')
 
     # Calcular el valor total de las acciones
     total_value_of_shares = num_shares * avg_value
