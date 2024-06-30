@@ -41,8 +41,8 @@ if ticker:
 
     if not dividend_data.empty:
         # Filtrar datos hasta la fecha actual (2024)
-        max_date = pd.Timestamp.now().normalize()  # Fecha actual sin la parte horaria
-        dividend_data = dividend_data[dividend_data['Fecha'] <= max_date]
+        current_date = pd.Timestamp.now().normalize()  # Fecha actual sin la parte horaria
+        dividend_data = dividend_data.loc[dividend_data['Fecha'] <= current_date]
 
         # Mostrar una vista previa de los datos
         st.subheader('Datos de Dividendos')
