@@ -10,6 +10,7 @@ def load_dividend_data(ticker):
     dividends = stock.dividends
     dividends = dividends.reset_index()
     dividends.columns = ['Fecha', 'Dividendo']
+    dividends['Fecha'] = pd.to_datetime(dividends['Fecha'])
     return dividends
 
 # Título de la aplicación
@@ -44,8 +45,8 @@ if ticker:
     st.plotly_chart(fig_hist, use_container_width=True)
 
     # Filtrar por fecha
-    start_date = st.date_input('Seleccionar Fecha de Inicio', dividend_data['Fecha'].min())
-    end_date = st.date_input('Seleccionar Fecha de Fin', dividend_data['Fecha'].max())
+    start_date = st.date_input('Seleccionar Fecha de Inicio', dividend_data['Fecha'].min().date())
+    end_date = st.date_input('Seleccionar Fecha de Fin', dividend_data['Fecha'].max().date())
 
     filtered_data = dividend_data[(dividend_data['Fecha'] >= pd.to_datetime(start_date)) & (dividend_data['Fecha'] <= pd.to_datetime(end_date))]
 
