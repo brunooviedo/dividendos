@@ -52,6 +52,19 @@ if ticker:
     st.subheader('Total de Dividendos Pagados')
     st.write(f'${total_dividends:.2f}')
 
+    # Obtener el último dividendo pagado y su fecha
+    if not dividend_data.empty:
+        last_dividend = dividend_data.iloc[-1]['Dividendo']
+        last_dividend_date = dividend_data.iloc[-1]['Fecha'].strftime('%Y-%m-%d')
+    else:
+        last_dividend = 0
+        last_dividend_date = 'Fecha no disponible'
+
+    # Mostrar el último dividendo pagado y su fecha
+    st.subheader('Último Dividendo Pagado')
+    st.write(f'Valor: ${last_dividend:.2f}')
+    st.write(f'Fecha: {last_dividend_date}')
+
     # Graficar los dividendos a lo largo del tiempo
     fig = px.line(dividend_data, x='Fecha', y='Dividendo', title='Dividendos Pagados a lo largo del Tiempo')
     st.plotly_chart(fig, use_container_width=True)
@@ -72,9 +85,6 @@ if ticker:
     st.sidebar.subheader('Cálculo de Dividendos Personales')
     num_shares = st.sidebar.number_input('Número de acciones que tienes', min_value=1, value=100)
     avg_value = st.sidebar.number_input('Valor promedio de cada acción (en $)', min_value=0.0, value=150.0, step=0.01)
-
-    # Obtener el último dividendo pagado
-    last_dividend = dividend_data['Dividendo'].iloc[-1] if not dividend_data.empty else 0
 
     # Calcular dividendos recibidos con el último dividendo pagado
     total_dividends_received = last_dividend * num_shares
